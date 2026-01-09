@@ -154,5 +154,30 @@ setMode(state.mode||'fill');
 renderBG();
 renderFields();
 </script>
+
+  <script>
+const canvas = document.getElementById("formCanvas");
+const ctx = canvas.getContext("2d");
+
+const img = new Image();
+img.src = "formato1.png"; // tu imagen de fondo
+
+img.onload = () => {
+  canvas.width = img.width;
+  canvas.height = img.height;
+  ctx.drawImage(img, 0, 0);
+
+  fetch("campos_imss.json")
+    .then(res => res.json())
+    .then(campos => {
+      ctx.fillStyle = "black";
+
+      campos.forEach(campo => {
+        ctx.font = `${campo.FontSize}px Arial`;
+        ctx.fillText(campo.Text, campo.X, campo.Y);
+      });
+    });
+};
+</script>
 </body>
 </html>
